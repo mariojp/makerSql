@@ -6,7 +6,7 @@ import com.sql.core.executors.SqlExecutors;
 
 public class ExecutorsData implements SqlExecutors{
 
-       @Override
+    @Override
     public ResultSet executeExcalar(Connection connection, String query, Object... bindParams) {
         throw new UnsupportedOperationException("Unimplemented method 'executeExcalar'");
     }

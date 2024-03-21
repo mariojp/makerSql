@@ -11,7 +11,7 @@ public class ExecutorsFactoryData extends ExecutorsFactory{
 
     @Override
     public SqlExecutors createExcutors(SqlMaker sqlmaker, SqlConnection conectionMaker) {
-        return new ExecutorsDataSingle();
+        return new ExecutorsData();
     }
 
     @Override

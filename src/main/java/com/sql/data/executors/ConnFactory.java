@@ -8,7 +8,7 @@ public class ConnFactory extends SqlConnectionFactory{
 
     @Override
     public SqlConnection createSqlConnection() {
-        return new SqlConnectionData();
+        return new SqlConnectionDataSingle();
     }
 
     @Override

@@ -3,95 +3,30 @@ package com.sql.data.executors;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.sql.core.PoolEmptyException;
 import com.sql.core.executors.ConnectionComponents;
 import com.sql.core.executors.ConnectionConfig;
-import com.sql.core.executors.SqlConnectionExtended;
+import com.sql.core.executors.SqlConnection;
 
-public class SqlConnectionData implements SqlConnectionExtended{
-    private static final int POOL_SIZE = 5;
-    private static List<Connection> pool;
-
-    public SqlConnectionData(){
-        pool = new ArrayList<>(POOL_SIZE);
-    }
+public class SqlConnectionDataSingle implements SqlConnection{
 
     @Override
     public Connection generateConnection(ConnectionConfig config) {
-        try {
-            return getConnection();
-        } catch (PoolEmptyException e) {
-            e.printStackTrace();
-        }
-        return null;
+        ConnectionComponents builder = new ConnectionInfo();
+        config.config(builder);
+        return genConn(builder.getHost(), builder.getPort(), builder.getDatabase(), builder.getUser(), builder.getPassword(), builder.getDbType());
     }
 
     @Override
     public Connection generateConnection(ConnectionComponents config) {
-        try {
-            return getConnection();
-        } catch (PoolEmptyException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return genConn(config.getHost(), config.getPort(), config.getDatabase(), config.getUser(), config.getPassword(), config.getDbType());
     }
 
     @Override
     public Connection generateConnection(String host, int port, String dataBase, String user, String password, String dbTpe) {
-        try {
-            return getConnection();
-        } catch (PoolEmptyException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return genConn(host, port, dataBase, user, password, dbTpe);
     }
     
-    @Override
-    public synchronized void generatePoolConnection(ConnectionConfig config) {
-        ConnectionComponents builder = new ConnectionInfo();
-        config.config(builder);
-
-        for (int i = 0; i < POOL_SIZE; i++) {
-            Connection con = genConn(builder.getHost(), builder.getPort(), builder.getDatabase(), builder.getUser(), builder.getPassword(), builder.getDbType());
-            pool.add(con);
-        } 
-        System.out.println("Pool de conexão bem Estabelecida ");  
-    }
-
-    @Override
-    public synchronized void generatePoolConnection(ConnectionComponents config) {
-        for (int i = 0; i < POOL_SIZE; i++) {
-            Connection con = genConn(config.getHost(), config.getPort(), config.getDatabase(), config.getUser(), config.getPassword(), config.getDbType());
-            pool.add(con);
-        }
-        System.out.println("Pool de conexão bem Estabelecida ");  
-    }
-
-    @Override
-    public synchronized void generatePoolConnection(String host, int port, String dataBase, String user, String password, String dbTpe) {
-        for (int i = 0; i < POOL_SIZE; i++){
-            Connection con = genConn(host, port, dataBase, user, password, dbTpe);
-            pool.add(con);
-        }
-        System.out.println("Pool de conexão bem Estabelecida ");  
-    }
-
-    @Override
-    public synchronized Connection getConnection() throws PoolEmptyException{
-        if (pool.isEmpty()) {
-            throw new PoolEmptyException("Pool de conexões esgotado");
-        }
-        return pool.remove(0);
-    }
-
-    @Override
-    public void releaseConnection(Connection connection) {
-        pool.add(connection);
-    }
-
     private Connection genConn(String host, int port, String dataBase, String user, String password, String dbTpe){
         Connection connection = null;
         port = addDefaultPortFilter(port, dbTpe);
@@ -163,5 +98,4 @@ public class SqlConnectionData implements SqlConnectionExtended{
             return port;
         }
     }
-
 }
