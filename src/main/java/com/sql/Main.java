@@ -8,6 +8,8 @@ public class Main {
     public static void main(String[] args) {
         SqlGenFactory factory = new SqlGenFactory();
         SqlMaker sqlMaker = factory.createSqlMakerExtended(null);
+
+        sqlMaker.generateSelectSql(null, "OR", "username", "email");
         
     }
 }

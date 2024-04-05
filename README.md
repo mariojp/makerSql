@@ -61,6 +61,7 @@ SqlMaker sqlMaker = factory.createSqlMakerExtended(null);
 
 // Usar métodos do SqlGenerator para gerar consultas SQL dinâmicas
 SqlResponse selectAllQuery = sqlMaker.generateSelectAllSql(MyEntity.class);
+SqlResponse selectEmailOrUserQuery = sqlMaker.generateSelectSql(MyEntity.class, "OR", "username", "email");
 SqlResponse insertQuery = sqlMaker.generateInsertSql(MyEntity.class);
 SqlResponse deleteQuery = sqlMaker.generateDeleteSql(MyEntity.class);
 SqlResponse updateQuery = sqlMaker.generateUpdateSql(MyEntity.class);
