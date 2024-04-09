@@ -8,6 +8,23 @@ presentes nas classes Java.
 1. Certifique-se de ter configurado corretamente o ambiente de desenvolvimento Java.
 2. Execute o arquivo Main.java.
 ## Dependências
+```java
+<dependencies>
+        <dependency>
+            <groupId>com.sql</groupId>
+            <artifactId>maker</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>My Maven Repo on GitHub</name>
+            <url>https://github.com/DanielTM999/makerSql/</url>
+        </repository>
+    </repositories>
+```
 - O projeto depende da biblioteca `sql-core` para a funcionalidade de geração de consultas
 SQL.
 - Todas as dependências necessárias devem ser inclusas no classpath antes de executar o
